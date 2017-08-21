@@ -1,0 +1,6 @@
+2017/08/21 11:59:25, ERROR :abcdef
+sh: abcdef: command not found
+2017/08/21 11:59:25, INFO :echo "Client2"
+Client2
+2017/08/21 11:59:25, INFO :echo "Client3"
+Client3

@@ -6,7 +6,11 @@
  * Time: 23:41
  */
 require_once 'Log.php';
-require_once 'libs/PHPMailer/class.phpmailer.php';
+require_once 'libs/PHPMailer/PHPMailerAutoload.php';
+
+// Set timezone
+date_default_timezone_set('Asia/Tokyo');
+
 
 // Enable error
 $DEBUG = true;
@@ -32,8 +36,10 @@ $outputClientFile = 'output/client.log';
 $lastCommonFile = 'last/common';
 $lastClientFile = 'last/client';
 
-// Admin email
+// Email setting
 $adminEmail = 'minhtoan.bk@gmail.com';
+$smtpUser = 'bribritest001@gmail.com';
+$smtpPassword = 'yuuki0131';
 
 // Zip
 $zipTargetFolder = 'output';
@@ -71,14 +77,23 @@ if($apiResult){
 
             // Email
             $email = new PHPMailer();
-            $email->From      = 'you@example.com';
+            $email->isSMTP();
+            //$email->SMTPDebug = 2;
+            $email->Host = "smtp.gmail.com";
+            $email->Port = 587;
+            $email->SMTPAuth = true;
+            $email->Username = $smtpUser;
+            $email->Password = $smtpPassword;
+            $email->SMTPSecure = 'tls';
+
             $email->FromName  = gethostname();
-            $email->Subject   = gethostname() . '-コマンド結果-' . $now;
+            $email->CharSet = 'UTF-8';
+            $email->Subject   = 'コマンド実装結果-' . $now;
             $email->Body      = '実行結果はZipファイルに添付しました';
             $email->addAddress($adminEmail);
             $email->addAttachment($zipFilePath , $zipFileName );
             $email->send();
-//
+
         }else{
             Log::info("Zip エラー: " . "\n" . print_r($output, true), Log::ERROR, $logFile);
         }
@@ -105,6 +120,11 @@ function executeContent($contentArray, $lastContentFile, $outputFile, $logFile){
     // Get history file
     $lastContent = file_get_contents($lastContentFile);
     $content = json_encode($contentArray);
+
+    if(count($contentArray) == 0){
+        file_put_contents($lastContentFile, '');
+        return false;
+    }
 
     // Content is the same, then exist
     if($content && $lastContent == json_encode($content)){

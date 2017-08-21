@@ -18,7 +18,8 @@ if($DEBUG){
 
 ///////============= SETTING ===============/////
 // Server URL
-$apiURL = 'http://localhost/workspace/auto-update-cmd/Server/api_get_command.php';
+//$apiURL = 'http://localhost/workspace/auto-update-cmd/Server/api_get_command.php';
+$apiURL = "http://54.199.131.39/auto-update-command/Server/api_get_command.php";
 
 // Log
 $logFile = 'logs/all.log';

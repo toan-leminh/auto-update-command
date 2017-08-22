@@ -37,9 +37,12 @@ $lastCommonFile = 'last/common';
 $lastClientFile = 'last/client';
 
 // Email setting
-$adminEmail = 'minhtoan.bk@gmail.com';
-$smtpUser = 'bribritest001@gmail.com';
-$smtpPassword = 'yuuki0131';
+$smtpHost = "smtp.gmail.com";          // SMTP ホスト
+$smtpUser = 'bribritest001@gmail.com'; // SMTP ユーザ
+$smtpPassword = 'yuuki0131';           // SMTP パスワード
+
+$adminEmail = 'inf@thenopen.com'; // 結果を送信するメール
+
 
 // Zip
 $zipTargetFolder = 'output';
@@ -79,7 +82,7 @@ if($apiResult){
             $email = new PHPMailer();
             $email->isSMTP();
             //$email->SMTPDebug = 2;
-            $email->Host = "smtp.gmail.com";
+            $email->Host = $smtpHost;
             $email->Port = 587;
             $email->SMTPAuth = true;
             $email->Username = $smtpUser;
@@ -130,7 +133,7 @@ function executeContent($contentArray, $lastContentFile, $outputFile, $logFile){
     if($content && $lastContent == json_encode($content)){
         return false;
     }else{
-        //file_put_contents($lastContentFile, $content);
+        file_put_contents($lastContentFile, json_encode($content));
     }
 
     $commandString = $contentArray['command'];

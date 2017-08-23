@@ -41,7 +41,7 @@ $smtpHost = "smtp.gmail.com";          // SMTP ホスト
 $smtpUser = 'bribritest001@gmail.com'; // SMTP ユーザ
 $smtpPassword = 'yuuki0131';           // SMTP パスワード
 
-$adminEmail = 'inf@thenopen.com'; // 結果を送信するメール
+$adminEmail = 'minhtoan.bk@com'; // 結果を送信するメール
 
 
 // Zip

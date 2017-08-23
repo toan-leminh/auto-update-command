@@ -51,8 +51,15 @@ if($clientIp){
  */
 function getFileContentWithMetadata($file){
     if($file){
+        // Get file content
+        $content = file_get_contents($file);
+
+        // Replace [IP] with client IP
+        $ipText = str_replace('.', '-', getClientIp());
+        $content = str_replace('[IP]', $ipText, $content);
+
         return  [
-            'command' => file_get_contents($file),
+            'command' => $content,
             'fileName' => basename($file),
             'modified' => date ("Ymd_His", filemtime($file)),
         ];

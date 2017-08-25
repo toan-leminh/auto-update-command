@@ -37,11 +37,7 @@ $lastCommonFile = 'last/common';
 $lastClientFile = 'last/client';
 
 // Email setting
-$smtpHost = "smtp.gmail.com";          // SMTP ホスト
-$smtpUser = 'bribritest001@gmail.com'; // SMTP ユーザ
-$smtpPassword = 'yuuki0131';           // SMTP パスワード
-
-$adminEmail = 'minhtoan.bk@com'; // 結果を送信するメール
+$adminEmail = 'minhtoan.bk@gmail.com'; // 結果を送信するメール
 
 
 // Zip
@@ -80,16 +76,19 @@ if($apiResult){
 
             // Email
             $email = new PHPMailer();
-            $email->isSMTP();
             //$email->SMTPDebug = 2;
-            $email->Host = $smtpHost;
-            $email->Port = 587;
-            $email->SMTPAuth = true;
-            $email->Username = $smtpUser;
-            $email->Password = $smtpPassword;
-            $email->SMTPSecure = 'tls';
+//            $email->isSMTP();
+//            $email->Host = $smtpHost;
+//            $email->Port = 587;
+//            $email->SMTPAuth = true;
+//            $email->Username = $smtpUser;
+//            $email->Password = $smtpPassword;
+//            $email->SMTPSecure = 'tls';
+            // SMTPからSendmailに変更
+            $email->isSendmail();
 
             $email->FromName  = gethostname();
+            $email->addReplyTo($adminEmail, gethostname());
             $email->CharSet = 'UTF-8';
             $email->Subject   = 'コマンド実装結果-' . $now;
             $email->Body      = '実行結果はZipファイルに添付しました';
